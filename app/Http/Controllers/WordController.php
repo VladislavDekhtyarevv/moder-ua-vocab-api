@@ -25,9 +25,14 @@ class WordController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Word::filter($request)->withCount(['upvoters', 'downvoters'])->paginate(12);
+        $data = Word::withCount(['upvoters', 'downvoters'])->filter($request)->paginate(12);
         return WordResource::collection($data);
-//        return response()->json($data);
+    }
+    public function personalIndex(Request $request)
+    {
+        $user = Auth::user();
+        $data = $user->words()->withCount(['upvoters', 'downvoters'])->filter($request)->paginate(12);
+        return WordResource::collection($data);
     }
 
     /**

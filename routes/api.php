@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
     Route::get('/words/create', [\App\Http\Controllers\WordController::class, 'create']);
     Route::post('/words', [\App\Http\Controllers\WordController::class, 'store']);
+    Route::get('/personal-words', [\App\Http\Controllers\WordController::class, 'personalIndex']);
     //Route::get('/words/{word}', [\App\Http\Controllers\WordController::class, 'show']);
     //Route::put('/words/{word}', [\App\Http\Controllers\WordController::class, 'update']);
     //Route::delete('/words/{word}', [\App\Http\Controllers\WordController::class, 'destroy']);

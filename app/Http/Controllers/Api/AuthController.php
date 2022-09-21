@@ -90,10 +90,10 @@ class AuthController extends Controller
                     'status' => false,
                     'errors' => [
                         'password' => [
-                            'Email & Password does not match with our record.'
+                            'Електронна адреса та пароль не збігаються з нашими даними.'
                         ]
                     ],
-                    'message' => 'Email & Password does not match with our record.',
+                    'message' => 'Електронна адреса та пароль не збігаються з нашими даними.',
                 ], 401);
             }
 
