@@ -1,0 +1,5 @@
+version: '2'
+services:
+  vocab_web:
+        ports:
+            - "45222:80"

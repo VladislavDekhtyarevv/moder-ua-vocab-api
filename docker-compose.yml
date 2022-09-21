@@ -1,0 +1,41 @@
+version: "2"
+services:
+    vocab_web:
+        container_name: vocab-web-container
+        build:
+            context: ./data/docker/web
+            dockerfile: dev/Dockerfile
+            args:
+                HOST_UID: ${HOST_UID}
+        restart: always
+        volumes:
+            - .:/var/www/html
+        links:
+            - vocab_db
+            - vocab_redis
+        depends_on:
+            - vocab_db
+            - vocab_redis
+    vocab_db:
+        container_name: vocab-db-container
+        build:
+            context: ./data/docker/db
+            args:
+                HOST_UID: ${HOST_UID}
+        restart: always
+        volumes:
+            - ./data/volumes/db:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: vocab
+            MYSQL_USER: docker
+            MYSQL_PASSWORD: secret
+    vocab_redis:
+        container_name: vocab-redis-container
+        restart: always
+        build:
+            context: ./data/docker/redis
+            args:
+                HOST_UID: ${HOST_UID}
+        volumes:
+            - ./data/volumes/redis:/data
