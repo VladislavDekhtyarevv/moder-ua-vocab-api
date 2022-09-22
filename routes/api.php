@@ -22,9 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/words/create', [\App\Http\Controllers\WordController::class, 'create']);
     Route::post('/words', [\App\Http\Controllers\WordController::class, 'store']);
     Route::get('/personal-words', [\App\Http\Controllers\WordController::class, 'personalIndex']);
+    Route::get('/liked-words', [\App\Http\Controllers\WordController::class, 'likedIndex']);
     //Route::get('/words/{word}', [\App\Http\Controllers\WordController::class, 'show']);
     //Route::put('/words/{word}', [\App\Http\Controllers\WordController::class, 'update']);
-    //Route::delete('/words/{word}', [\App\Http\Controllers\WordController::class, 'destroy']);
+    Route::delete('/words/{word}', [\App\Http\Controllers\WordController::class, 'destroy']);
 
     Route::post('/toggle-like', [\App\Http\Controllers\Api\LikeController::class, 'toggleLike']);
     Route::post('/toggle-dislike', [\App\Http\Controllers\Api\LikeController::class, 'toggleDislike']);

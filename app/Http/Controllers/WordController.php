@@ -34,6 +34,15 @@ class WordController extends Controller
         $data = $user->words()->withCount(['upvoters', 'downvoters'])->filter($request)->paginate(12);
         return WordResource::collection($data);
     }
+    public function likedIndex(Request $request)
+    {
+        $userId = Auth::id();
+        $data = Word::withCount(['upvoters', 'downvoters'])->whereHas('voters', function($q) use ($userId) {
+            $q->where('user_id', $userId)
+              ->where('votes', '>', 0);
+        })->filter($request)->paginate(12);
+        return WordResource::collection($data);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -104,6 +113,10 @@ class WordController extends Controller
      */
     public function destroy(Word $word)
     {
-        //
+        $userId = Auth::id();
+        if($word->delete() && $word->user_id = $userId) {
+            return response(['status' => 'success', 'message' => 'Слово успішно видалено'], 200);
+        }
+        return response(['status' => 'error', 'message' => 'Слово не видалено'], 406);
     }
 }
